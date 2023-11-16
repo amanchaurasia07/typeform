@@ -1,0 +1,50 @@
+django-admin startproject typeform_project
+cd typeform_project
+
+
+# views.py file in the typeform_app
+
+import json
+import requests
+from django.shortcuts import render
+from django.http import JsonResponse
+
+def typeform_api_endpoint(request):
+    token = "tfp_9mtnXQToJNxPLMVaJtMgw2pD4Hkutujjd2RGPuqyvzCw_3mM5QCak5BWSfk"
+    workspace_id = "9uPaNw"
+    header = {"Authorization": "Bearer {}".format(token)}
+    workspace_json = requests.get(
+        f"https://api.typeform.com/forms?workspace_id={workspace_id}",
+        params={"page": 1, "page_size": 200},
+        headers=header,
+    )
+    endpoint = workspace_json.url
+    return JsonResponse({"api_endpoint": endpoint})
+
+
+# urls.py file in the typeform_app
+
+from django.urls import path
+from .views import typeform_api_endpoint
+
+urlpatterns = [
+    path('typeform-api-endpoint/', typeform_api_endpoint, name='typeform_api_endpoint'),
+]
+
+
+# urls.py file in the typeform_project
+
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('typeform/', include('typeform_app.urls')),
+]
+
+
+
+# to run the server use:-
+
+python manage.py runserver

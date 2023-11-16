@@ -13,7 +13,7 @@ def list_workspace_forms(workspace_id, token: str):
     )
     form_list = workspace_json.json()["items"]
     return [{"id": form["id"], "title": form["title"]} for form in form_list]
-# token = "tfp_EytXRGB5CvVk6rSAUgmzTVdeFY3971nZprHA1vJ8BwKj_3srKQVvL8a9nJT"
+# token = generated token place here!
 
 # workspace_id = "9uPaNw"
 forms = list_workspace_forms(workspace_id, token)
